@@ -22,6 +22,8 @@ public static class BuildMainScene
         cam.orthographicSize = 6f;
         cameraGo.transform.position = new Vector3(0, 0, -10);
 
+        CreateStarfieldBackground();
+
         var gameManager = new GameObject("GameManager").AddComponent<GameManager>();
         var uiManager = new GameObject("UIManager").AddComponent<UIManager>();
         var spawner = new GameObject("EnemySpawner").AddComponent<EnemySpawner>();
@@ -71,7 +73,8 @@ public static class BuildMainScene
 
     static void BuildUI(Transform canvas, UIManager ui)
     {
-        var startPanel = CreatePanel(canvas, "StartScreenPanel", new Color(0f, 0f, 0f, 0.8f));
+        var startPanel = CreatePanel(canvas, "StartScreenPanel", new Color(0f, 0f, 0f, 0.42f));
+        var startCanvasGroup = startPanel.AddComponent<CanvasGroup>();
         var title = CreateTMP(startPanel.transform, "Title", "Kawaii Starfall", 72, new Vector2(0, 200));
         var subtitle = CreateTMP(startPanel.transform, "Subtitle", "A neon arcade shooter", 36, new Vector2(0, 120));
         var startBtn = CreateButton(startPanel.transform, "StartButton", "Start Game", new Vector2(0, 0));
@@ -91,6 +94,7 @@ public static class BuildMainScene
         so.FindProperty("heartsText").objectReferenceValue = hearts;
         so.FindProperty("weaponText").objectReferenceValue = weapon;
         so.FindProperty("startScreenPanel").objectReferenceValue = startPanel;
+        so.FindProperty("startScreenCanvasGroup").objectReferenceValue = startCanvasGroup;
         so.FindProperty("titleText").objectReferenceValue = title;
         so.FindProperty("subtitleText").objectReferenceValue = subtitle;
         so.FindProperty("gameOverPanel").objectReferenceValue = gameOver;
@@ -108,6 +112,40 @@ public static class BuildMainScene
         rt.anchorMin = Vector2.zero; rt.anchorMax = Vector2.one; rt.offsetMin = Vector2.zero; rt.offsetMax = Vector2.zero;
         go.GetComponent<Image>().color = color;
         return go;
+    }
+
+    static void CreateStarfieldBackground()
+    {
+        var go = new GameObject("StarfieldBackground", typeof(SpriteRenderer));
+        var renderer = go.GetComponent<SpriteRenderer>();
+        renderer.sprite = CreateStarfieldSprite(512, 512, 220);
+        renderer.sortingOrder = -100;
+        go.transform.position = new Vector3(0f, 0f, 0f);
+        go.transform.localScale = new Vector3(18f, 13f, 1f);
+    }
+
+    static Sprite CreateStarfieldSprite(int width, int height, int stars)
+    {
+        var tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        var bg = new Color(0.03f, 0.04f, 0.1f, 1f);
+        var pixels = new Color[width * height];
+        for (int i = 0; i < pixels.Length; i++) pixels[i] = bg;
+
+        Random.InitState(1337);
+        for (int i = 0; i < stars; i++)
+        {
+            int x = Random.Range(0, width);
+            int y = Random.Range(0, height);
+            float b = Random.Range(0.55f, 0.95f);
+            var c = new Color(b, b, b, 1f);
+            pixels[y * width + x] = c;
+        }
+
+        tex.SetPixels(pixels);
+        tex.filterMode = FilterMode.Point;
+        tex.wrapMode = TextureWrapMode.Clamp;
+        tex.Apply();
+        return Sprite.Create(tex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f), 64f);
     }
 
     static TMP_Text CreateTMP(Transform parent, string name, string text, int size, Vector2 anchored)

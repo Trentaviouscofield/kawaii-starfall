@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text weaponText;
     [Header("Start Screen")]
     [SerializeField] private GameObject startScreenPanel;
+    [SerializeField] private CanvasGroup startScreenCanvasGroup;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text subtitleText;
 
@@ -61,6 +64,12 @@ public class UIManager : MonoBehaviour
         if (startScreenPanel != null)
         {
             startScreenPanel.SetActive(true);
+            if (startScreenCanvasGroup != null)
+            {
+                startScreenCanvasGroup.alpha = 1f;
+                startScreenCanvasGroup.interactable = true;
+                startScreenCanvasGroup.blocksRaycasts = true;
+            }
             return;
         }
 
@@ -71,11 +80,36 @@ public class UIManager : MonoBehaviour
     {
         if (startScreenPanel != null)
         {
-            startScreenPanel.SetActive(false);
+            StartCoroutine(FadeOutStartScreen());
             return;
         }
 
         Debug.LogWarning("UIManager: Start Screen panel is not assigned. Nothing to hide.");
+    }
+
+    private IEnumerator FadeOutStartScreen()
+    {
+        if (startScreenCanvasGroup == null)
+        {
+            startScreenPanel.SetActive(false);
+            yield break;
+        }
+
+        float duration = 0.35f;
+        float elapsed = 0f;
+        float startAlpha = startScreenCanvasGroup.alpha;
+        startScreenCanvasGroup.interactable = false;
+        startScreenCanvasGroup.blocksRaycasts = false;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            startScreenCanvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / duration);
+            yield return null;
+        }
+
+        startScreenCanvasGroup.alpha = 0f;
+        startScreenPanel.SetActive(false);
     }
 
     public void RefreshHUD()

@@ -26,6 +26,8 @@ If you want to verify or adjust manually, open `Assets/Scenes/MainScene.unity` a
   - Game Over panel with Restart button -> `UIManager.OnRestartPressed`
 
 Expected result:
+- Scene includes a generated dark starfield background visible during both Start Screen and gameplay.
+- Start Screen fades out on Start Game while keeping the background active.
 - Play shows start screen first.
 - No spawn/shooting until Start Game is clicked.
 - Start Game hides start screen and begins Wave 1.
