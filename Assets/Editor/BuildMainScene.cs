@@ -19,7 +19,7 @@ public static class BuildMainScene
         var cameraGo = new GameObject("Main Camera", typeof(Camera));
         var cam = cameraGo.GetComponent<Camera>();
         cam.orthographic = true;
-        cam.orthographicSize = 5f;
+        cam.orthographicSize = 6f;
         cameraGo.transform.position = new Vector3(0, 0, -10);
 
         var gameManager = new GameObject("GameManager").AddComponent<GameManager>();
@@ -41,10 +41,10 @@ public static class BuildMainScene
 
         var player = (GameObject)PrefabUtility.InstantiatePrefab(playerPrefab);
         player.name = "Player";
-        player.transform.position = new Vector3(0, -4.2f, 0);
+        player.transform.position = new Vector3(0, -4.8f, 0);
         var firePoint = new GameObject("FirePoint").transform;
         firePoint.SetParent(player.transform);
-        firePoint.localPosition = new Vector3(0, 0.6f, 0);
+        firePoint.localPosition = new Vector3(0, 0.8f, 0);
 
         var pc = player.GetComponent<PlayerController>();
         SetSerializedObject(pc, "bulletPrefab", bulletPrefab);
@@ -55,6 +55,11 @@ public static class BuildMainScene
         EditorUtility.SetDirty(enemyPrefab);
 
         SetSerializedObject(spawner, "enemyPrefab", enemyPrefab);
+        SetSerializedObject(spawner, "xSpawnLimit", 7.5f);
+        SetSerializedObject(spawner, "ySpawnPosition", 6.2f);
+        SetSerializedObject(spawner, "bottomLimit", -6.4f);
+        SetSerializedObject(spawner, "baseEnemySpeed", 0.9f);
+        SetSerializedObject(spawner, "spawnInterval", 1.4f);
 
         BuildUI(canvasGo.transform, uiManager);
 
@@ -130,7 +135,10 @@ public static class BuildMainScene
     static GameObject CreatePlayerPrefab()
     {
         var go = new GameObject("PlayerPlaceholder", typeof(SpriteRenderer), typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(PlayerController));
-        go.GetComponent<SpriteRenderer>().sprite = MakeSprite(new Color(0.2f, 1f, 1f));
+        var renderer = go.GetComponent<SpriteRenderer>();
+        renderer.sprite = MakeSprite(new Color(0.2f, 1f, 1f));
+        renderer.sortingOrder = 10;
+        go.transform.localScale = new Vector3(1.4f, 1f, 1f);
         go.GetComponent<BoxCollider2D>().isTrigger = true;
         go.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         return SavePrefab(go, "Assets/Prefabs/PlayerPlaceholder.prefab");
@@ -138,7 +146,10 @@ public static class BuildMainScene
     static GameObject CreateEnemyPrefab()
     {
         var go = new GameObject("EnemyPlaceholder", typeof(SpriteRenderer), typeof(CircleCollider2D), typeof(Rigidbody2D), typeof(Enemy));
-        go.GetComponent<SpriteRenderer>().sprite = MakeSprite(new Color(0.1f, 0.1f, 0.15f));
+        var renderer = go.GetComponent<SpriteRenderer>();
+        renderer.sprite = MakeSprite(new Color(0.1f, 0.1f, 0.15f));
+        renderer.sortingOrder = 10;
+        go.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
         go.GetComponent<CircleCollider2D>().isTrigger = true;
         go.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         return SavePrefab(go, "Assets/Prefabs/EnemyPlaceholder.prefab");
@@ -146,8 +157,10 @@ public static class BuildMainScene
     static GameObject CreateBulletPrefab()
     {
         var go = new GameObject("BulletPlaceholder", typeof(SpriteRenderer), typeof(CircleCollider2D), typeof(Rigidbody2D), typeof(Bullet));
-        go.GetComponent<SpriteRenderer>().sprite = MakeSprite(new Color(0.6f, 1f, 0.95f));
-        go.transform.localScale = new Vector3(0.2f, 0.4f, 1);
+        var renderer = go.GetComponent<SpriteRenderer>();
+        renderer.sprite = MakeSprite(new Color(0.6f, 1f, 0.95f));
+        renderer.sortingOrder = 12;
+        go.transform.localScale = new Vector3(0.35f, 0.7f, 1);
         go.GetComponent<CircleCollider2D>().isTrigger = true;
         go.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         return SavePrefab(go, "Assets/Prefabs/BulletPlaceholder.prefab");
@@ -155,7 +168,10 @@ public static class BuildMainScene
     static GameObject CreateUpgradeOrbPrefab()
     {
         var go = new GameObject("UpgradeOrbPlaceholder", typeof(SpriteRenderer), typeof(CircleCollider2D), typeof(Rigidbody2D), typeof(UpgradeOrb));
-        go.GetComponent<SpriteRenderer>().sprite = MakeSprite(new Color(1f, 0.5f, 1f));
+        var renderer = go.GetComponent<SpriteRenderer>();
+        renderer.sprite = MakeSprite(new Color(1f, 0.5f, 1f));
+        renderer.sortingOrder = 11;
+        go.transform.localScale = new Vector3(0.8f, 0.8f, 1f);
         go.GetComponent<CircleCollider2D>().isTrigger = true;
         go.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         return SavePrefab(go, "Assets/Prefabs/UpgradeOrbPlaceholder.prefab");
