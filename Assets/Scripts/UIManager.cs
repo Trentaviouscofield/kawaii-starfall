@@ -1,18 +1,18 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text waveText;
-    [SerializeField] private Text heartsText;
-    [SerializeField] private Text weaponText;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text waveText;
+    [SerializeField] private TMP_Text heartsText;
+    [SerializeField] private TMP_Text weaponText;
     [Header("Start Screen")]
     [SerializeField] private GameObject startScreenPanel;
-    [SerializeField] private Text titleText;
-    [SerializeField] private Text subtitleText;
+    [SerializeField] private TMP_Text titleText;
+    [SerializeField] private TMP_Text subtitleText;
 
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverPanel;

@@ -61,14 +61,14 @@ This repository now contains the starter gameplay scripts for a brand-new standa
      - Assign `Enemy Prefab`.
    - Player ship GameObject:
      - Assign `Bullet Prefab` and `Fire Point` on `PlayerController`.
-9. Add Canvas + Text objects for:
+9. Add Canvas + TextMeshProUGUI objects for:
    - Score
    - Wave
    - Hearts
    - Weapon level
 10. Add a Start Screen panel with:
-   - Title text: `Kawaii Starfall`
-   - Subtitle text: `A neon arcade shooter.`
+   - Title TextMeshProUGUI text: `Kawaii Starfall`
+   - Subtitle TextMeshProUGUI text: `A neon arcade shooter.`
    - Start Game button hooked to `UIManager.OnStartGamePressed`
 11. Add a Game Over panel with restart button hooked to `UIManager.OnRestartPressed`.
 12. Wire `UIManager` references for start screen/title/subtitle and game-over panel.
