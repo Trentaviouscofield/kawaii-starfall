@@ -28,7 +28,8 @@ Transform:
 Camera:
   m_Enabled: 1
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
+  m_TargetDisplay: 0
 --- !u!1 &1100
 GameObject:
   m_Name: GameManager

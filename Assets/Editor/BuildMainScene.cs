@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public static class BuildMainScene
 {
-    [MenuItem("Kawaii Starfall/Build Playable MainScene")]
+    [MenuItem("Kawaii Starfall/Build Main Scene")]
     public static void Build()
     {
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -55,11 +55,11 @@ public static class BuildMainScene
         EditorUtility.SetDirty(enemyPrefab);
 
         SetSerializedObject(spawner, "enemyPrefab", enemyPrefab);
-        SetSerializedObject(spawner, "xSpawnLimit", 7.5f);
-        SetSerializedObject(spawner, "ySpawnPosition", 6.2f);
-        SetSerializedObject(spawner, "bottomLimit", -6.4f);
-        SetSerializedObject(spawner, "baseEnemySpeed", 0.9f);
-        SetSerializedObject(spawner, "spawnInterval", 1.4f);
+        SetSerializedFloat(spawner, "xSpawnLimit", 7.5f);
+        SetSerializedFloat(spawner, "ySpawnPosition", 6.2f);
+        SetSerializedFloat(spawner, "bottomLimit", -6.4f);
+        SetSerializedFloat(spawner, "baseEnemySpeed", 0.9f);
+        SetSerializedFloat(spawner, "spawnInterval", 1.4f);
 
         BuildUI(canvasGo.transform, uiManager);
 
@@ -210,6 +210,14 @@ public static class BuildMainScene
     {
         var so = new SerializedObject(target);
         so.FindProperty(fieldName).objectReferenceValue = value;
+        so.ApplyModifiedPropertiesWithoutUndo();
+        EditorUtility.SetDirty(target);
+    }
+
+    static void SetSerializedFloat(Object target, string fieldName, float value)
+    {
+        var so = new SerializedObject(target);
+        so.FindProperty(fieldName).floatValue = value;
         so.ApplyModifiedPropertiesWithoutUndo();
         EditorUtility.SetDirty(target);
     }

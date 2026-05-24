@@ -1,6 +1,6 @@
 # MainScene Wiring Checklist (Unity 2022.3 LTS)
 
-Open Unity 2022.3 LTS, then run `Kawaii Starfall -> Build Playable MainScene` to auto-create and wire the first playable scene/prefabs.
+Open Unity 2022.3 LTS, then run `Kawaii Starfall -> Build Main Scene` to auto-create and wire the first playable scene/prefabs.
 
 Sprite selection behavior:
 - Player sprite: `Assets/Art/player/playerShip1_blue.png`
