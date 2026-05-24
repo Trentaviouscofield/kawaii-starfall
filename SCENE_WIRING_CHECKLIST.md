@@ -1,6 +1,8 @@
 # MainScene Wiring Checklist (Unity 2022.3 LTS)
 
-Open `Assets/Scenes/MainScene.unity` and complete these assignments in Inspector:
+Open Unity 2022.3 LTS, then run `Kawaii Starfall -> Build Playable MainScene` to auto-create and wire the first playable scene/prefabs.
+
+If you want to verify or adjust manually, open `Assets/Scenes/MainScene.unity` and check these Inspector assignments:
 
 - GameManager: add `GameManager` script.
 - UIManager: add `UIManager` script and assign TMP fields:
