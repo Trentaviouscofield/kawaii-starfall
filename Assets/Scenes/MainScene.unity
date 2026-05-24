@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+OcclusionCullingSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+--- !u!196 &4
+NavMeshSettings:
+  m_ObjectHideFlags: 0
+--- !u!1 &1000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_Name: Main Camera
+  m_Component:
+  - component: {fileID: 1001}
+  - component: {fileID: 1002}
+--- !u!4 &1001
+Transform:
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+--- !u!20 &1002
+Camera:
+  m_Enabled: 1
+  orthographic: 1
+  orthographic size: 6
+  m_TargetDisplay: 0
+--- !u!1 &1100
+GameObject:
+  m_Name: GameManager
+  m_Component:
+  - component: {fileID: 1101}
+--- !u!4 &1101
+Transform:
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+--- !u!1 &1200
+GameObject:
+  m_Name: UIManager
+  m_Component:
+  - component: {fileID: 1201}
+--- !u!4 &1201
+Transform:
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+--- !u!1 &1300
+GameObject:
+  m_Name: EnemySpawner
+  m_Component:
+  - component: {fileID: 1301}
+--- !u!4 &1301
+Transform:
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+--- !u!1 &1400
+GameObject:
+  m_Name: Player
+  m_Component:
+  - component: {fileID: 1401}
+--- !u!4 &1401
+Transform:
+  m_LocalPosition: {x: 0, y: -4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+--- !u!1 &1500
+GameObject:
+  m_Name: Canvas
+  m_Component:
+  - component: {fileID: 1501}
+--- !u!4 &1501
+Transform:
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+--- !u!1 &1600
+GameObject:
+  m_Name: EventSystem
+  m_Component:
+  - component: {fileID: 1601}
+--- !u!4 &1601
+Transform:
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
