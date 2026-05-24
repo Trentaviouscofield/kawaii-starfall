@@ -81,10 +81,12 @@ public static class BuildMainScene
         var subtitle = CreateTMP(startPanel.transform, "Subtitle", "A neon arcade shooter", 36, new Vector2(0, 120));
         var startBtn = CreateButton(startPanel.transform, "StartButton", "Start Game", new Vector2(0, 0));
 
-        var score = CreateTMP(canvas, "ScoreText", "Score: 0", 36, new Vector2(-780, 480));
-        var wave = CreateTMP(canvas, "WaveText", "Wave: 1", 36, new Vector2(0, 480));
-        var hearts = CreateTMP(canvas, "HeartsText", "Hearts: 3", 36, new Vector2(780, 480));
-        var weapon = CreateTMP(canvas, "WeaponText", "Weapon Lv: 1", 30, new Vector2(0, 430));
+        var hudRoot = new GameObject("GameplayHUD", typeof(RectTransform));
+        hudRoot.transform.SetParent(canvas, false);
+        var score = CreateTMP(hudRoot.transform, "ScoreText", "Score: 0", 36, new Vector2(-780, 480));
+        var wave = CreateTMP(hudRoot.transform, "WaveText", "Wave: 1", 36, new Vector2(0, 480));
+        var hearts = CreateTMP(hudRoot.transform, "HeartsText", "Hearts: 3", 36, new Vector2(780, 480));
+        var weapon = CreateTMP(hudRoot.transform, "WeaponText", "Weapon Lv: 1", 30, new Vector2(0, 430));
 
         var gameOver = CreatePanel(canvas, "GameOverPanel", new Color(0f, 0f, 0f, 0.75f));
         CreateTMP(gameOver.transform, "GameOverText", "GAME OVER", 72, new Vector2(0, 120));
@@ -100,7 +102,11 @@ public static class BuildMainScene
         so.FindProperty("titleText").objectReferenceValue = title;
         so.FindProperty("subtitleText").objectReferenceValue = subtitle;
         so.FindProperty("gameOverPanel").objectReferenceValue = gameOver;
+        so.FindProperty("gameplayHudRoot").objectReferenceValue = hudRoot;
         so.ApplyModifiedPropertiesWithoutUndo();
+
+        gameOver.SetActive(false);
+        hudRoot.SetActive(false);
 
         UnityEventTools.AddPersistentListener(startBtn.onClick, ui.OnStartGamePressed);
         UnityEventTools.AddPersistentListener(restartBtn.onClick, ui.OnRestartPressed);

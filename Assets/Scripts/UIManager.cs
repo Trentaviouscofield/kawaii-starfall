@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gameplayHudRoot;
 
     private bool hasWarnedMissingScoreText;
     private bool hasWarnedMissingWaveText;
@@ -42,6 +43,11 @@ public class UIManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(false);
+        }
+
+        if (gameplayHudRoot != null)
+        {
+            gameplayHudRoot.SetActive(false);
         }
 
         ShowStartScreen();
@@ -80,6 +86,10 @@ public class UIManager : MonoBehaviour
     {
         if (startScreenPanel != null)
         {
+            if (gameplayHudRoot != null)
+            {
+                gameplayHudRoot.SetActive(true);
+            }
             StartCoroutine(FadeOutStartScreen());
             return;
         }
