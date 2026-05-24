@@ -2,6 +2,12 @@
 
 Open Unity 2022.3 LTS, then run `Kawaii Starfall -> Build Playable MainScene` to auto-create and wire the first playable scene/prefabs.
 
+Sprite selection behavior:
+- Player sprite: `Assets/Art/player/playerShip1_blue.png`
+- Enemy sprite: `Assets/Art/enemies/enemyBlack2.png`
+- Bullet sprite: `Assets/Art/projectiles/laserBlue02.png`
+- If any configured sprite is missing, the builder falls back to generated placeholders.
+
 If you want to verify or adjust manually, open `Assets/Scenes/MainScene.unity` and check these Inspector assignments:
 
 - GameManager: add `GameManager` script.

@@ -136,7 +136,7 @@ public static class BuildMainScene
     {
         var go = new GameObject("PlayerPlaceholder", typeof(SpriteRenderer), typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(PlayerController));
         var renderer = go.GetComponent<SpriteRenderer>();
-        renderer.sprite = MakeSprite(new Color(0.2f, 1f, 1f));
+        renderer.sprite = LoadSpriteOrFallback("Assets/Art/player/playerShip1_blue.png", new Color(0.2f, 1f, 1f), "player");
         renderer.sortingOrder = 10;
         go.transform.localScale = new Vector3(1.4f, 1f, 1f);
         go.GetComponent<BoxCollider2D>().isTrigger = true;
@@ -147,7 +147,7 @@ public static class BuildMainScene
     {
         var go = new GameObject("EnemyPlaceholder", typeof(SpriteRenderer), typeof(CircleCollider2D), typeof(Rigidbody2D), typeof(Enemy));
         var renderer = go.GetComponent<SpriteRenderer>();
-        renderer.sprite = MakeSprite(new Color(0.1f, 0.1f, 0.15f));
+        renderer.sprite = LoadSpriteOrFallback("Assets/Art/enemies/enemyBlack2.png", new Color(0.1f, 0.1f, 0.15f), "enemy");
         renderer.sortingOrder = 10;
         go.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
         go.GetComponent<CircleCollider2D>().isTrigger = true;
@@ -158,7 +158,7 @@ public static class BuildMainScene
     {
         var go = new GameObject("BulletPlaceholder", typeof(SpriteRenderer), typeof(CircleCollider2D), typeof(Rigidbody2D), typeof(Bullet));
         var renderer = go.GetComponent<SpriteRenderer>();
-        renderer.sprite = MakeSprite(new Color(0.6f, 1f, 0.95f));
+        renderer.sprite = LoadSpriteOrFallback("Assets/Art/projectiles/laserBlue02.png", new Color(0.6f, 1f, 0.95f), "projectile");
         renderer.sortingOrder = 12;
         go.transform.localScale = new Vector3(0.35f, 0.7f, 1);
         go.GetComponent<CircleCollider2D>().isTrigger = true;
@@ -191,6 +191,19 @@ public static class BuildMainScene
         for (int i = 0; i < px.Length; i++) px[i] = color;
         tex.SetPixels(px); tex.Apply();
         return Sprite.Create(tex, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f), 16);
+    }
+
+    static Sprite LoadSpriteOrFallback(string assetPath, Color fallbackColor, string category)
+    {
+        var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
+        if (sprite != null)
+        {
+            Debug.Log($"Using configured {category} sprite: {assetPath}");
+            return sprite;
+        }
+
+        Debug.LogWarning($"Configured {category} sprite not found at {assetPath}. Using generated placeholder sprite.");
+        return MakeSprite(fallbackColor);
     }
 
     static void SetSerializedObject(Object target, string fieldName, Object value)
