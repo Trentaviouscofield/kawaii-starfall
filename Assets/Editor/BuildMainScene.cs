@@ -20,6 +20,8 @@ public static class BuildMainScene
         var cam = cameraGo.GetComponent<Camera>();
         cam.orthographic = true;
         cam.orthographicSize = 6f;
+        cam.clearFlags = CameraClearFlags.SolidColor;
+        cam.backgroundColor = new Color(0.01f, 0.01f, 0.03f, 1f);
         cameraGo.transform.position = new Vector3(0, 0, -10);
 
         CreateStarfieldBackground();
@@ -118,10 +120,28 @@ public static class BuildMainScene
     {
         var go = new GameObject("StarfieldBackground", typeof(SpriteRenderer));
         var renderer = go.GetComponent<SpriteRenderer>();
-        renderer.sprite = CreateStarfieldSprite(512, 512, 220);
+        renderer.sprite = LoadBackgroundSpriteOrFallback("Assets/Art/Backgrounds/starfield", CreateStarfieldSprite(512, 512, 220));
         renderer.sortingOrder = -100;
         go.transform.position = new Vector3(0f, 0f, 0f);
         go.transform.localScale = new Vector3(18f, 13f, 1f);
+    }
+
+    static Sprite LoadBackgroundSpriteOrFallback(string expectedPathPrefix, Sprite fallback)
+    {
+        var guids = AssetDatabase.FindAssets("t:Sprite starfield", new[] { "Assets/Art/Backgrounds" });
+        if (guids.Length > 0)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+            if (sprite != null)
+            {
+                Debug.Log($"Using starfield background sprite: {path}");
+                return sprite;
+            }
+        }
+
+        Debug.LogWarning($"No starfield sprite found near {expectedPathPrefix}. Using generated fallback starfield.");
+        return fallback;
     }
 
     static Sprite CreateStarfieldSprite(int width, int height, int stars)

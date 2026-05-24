@@ -3,6 +3,7 @@
 Open Unity 2022.3 LTS, then run `Kawaii Starfall -> Build Main Scene` to auto-create and wire the first playable scene/prefabs.
 
 Sprite selection behavior:
+- Background sprite: first matching starfield sprite from `Assets/Art/Backgrounds`.
 - Player sprite: `Assets/Art/player/playerShip1_blue.png`
 - Enemy sprite: `Assets/Art/enemies/enemyBlack2.png`
 - Bullet sprite: `Assets/Art/projectiles/laserBlue02.png`
