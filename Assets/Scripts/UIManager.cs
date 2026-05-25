@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text waveText;
+    [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text heartsText;
     [SerializeField] private TMP_Text weaponText;
     [Header("Start Screen")]
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
 
     private bool hasWarnedMissingScoreText;
     private bool hasWarnedMissingWaveText;
+    private bool hasWarnedMissingLevelText;
     private bool hasWarnedMissingHeartsText;
     private bool hasWarnedMissingWeaponText;
 
@@ -139,6 +141,16 @@ public class UIManager : MonoBehaviour
         if (waveText != null)
         {
             waveText.text = $"Wave: {GameManager.Instance.CurrentWave}";
+        }
+
+        if (levelText != null)
+        {
+            levelText.text = $"Level: {GameManager.Instance.CurrentLevel}";
+        }
+        else if (!hasWarnedMissingLevelText)
+        {
+            hasWarnedMissingLevelText = true;
+            Debug.LogWarning("UIManager: levelText is not assigned in the Inspector.");
         }
         else if (!hasWarnedMissingWaveText)
         {

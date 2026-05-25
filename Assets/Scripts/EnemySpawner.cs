@@ -6,6 +6,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 1.4f;
     [SerializeField] private float baseEnemySpeed = 0.9f;
     [SerializeField] private float speedIncreasePerWave = 0.25f;
+    [Header("Level Scaling")]
+    [SerializeField] private float speedIncreasePerLevel = 0.2f;
+    [SerializeField] private float spawnIntervalReductionPerLevel = 0.12f;
+    [SerializeField] private float minSpawnInterval = 0.65f;
     [SerializeField] private float xSpawnLimit = 8f;
     [SerializeField] private float ySpawnPosition = 6f;
     [SerializeField] private float bottomLimit = -6f;
@@ -40,13 +44,17 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPrefab == null) return;
         if (Time.time < nextSpawnTime) return;
 
-        nextSpawnTime = Time.time + spawnInterval;
+        int level = GameManager.Instance.CurrentLevel;
+        float levelAdjustedSpawnInterval = Mathf.Max(minSpawnInterval, spawnInterval - ((level - 1) * spawnIntervalReductionPerLevel));
+        nextSpawnTime = Time.time + levelAdjustedSpawnInterval;
         float spawnX = Random.Range(-xSpawnLimit, xSpawnLimit);
         Vector3 spawnPos = new Vector3(spawnX, ySpawnPosition, 0f);
 
         GameObject enemyObj = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
         Enemy enemy = enemyObj.GetComponent<Enemy>();
-        float speed = baseEnemySpeed + ((GameManager.Instance.CurrentWave - 1) * speedIncreasePerWave);
+        float speed = baseEnemySpeed
+                      + ((GameManager.Instance.CurrentWave - 1) * speedIncreasePerWave)
+                      + ((level - 1) * speedIncreasePerLevel);
         enemy.Initialize(speed, bottomLimit);
     }
 

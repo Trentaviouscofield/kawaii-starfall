@@ -64,6 +64,7 @@ This repository now contains the starter gameplay scripts for a brand-new standa
 9. Add Canvas + TextMeshProUGUI objects for:
    - Score
    - Wave
+   - Level
    - Hearts
    - Weapon level
 10. Add a Start Screen panel with:

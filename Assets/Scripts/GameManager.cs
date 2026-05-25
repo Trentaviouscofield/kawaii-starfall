@@ -6,11 +6,14 @@ public class GameManager : MonoBehaviour
 
     [Header("Game State")]
     [SerializeField] private int startingHearts = 3;
+    [SerializeField] private int scorePerLevel = 150;
+    [SerializeField] private int maxLevel = 5;
 
     public int Score { get; private set; }
     public int CurrentWave { get; private set; } = 1;
     public int Hearts { get; private set; }
     public int WeaponLevel { get; private set; } = 1;
+    public int CurrentLevel { get; private set; } = 1;
     public bool IsGameOver { get; private set; }
     public bool IsGameStarted { get; private set; }
 
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
         Score = 0;
         WeaponLevel = 1;
         Hearts = startingHearts;
+        CurrentLevel = 1;
 
         UIManager.Instance?.HideStartScreen();
         UIManager.Instance?.RefreshHUD();
@@ -47,7 +51,14 @@ public class GameManager : MonoBehaviour
         if (IsGameOver || !IsGameStarted) return;
 
         Score += Mathf.Max(0, amount);
+        UpdateLevelFromScore();
         UIManager.Instance?.RefreshHUD();
+    }
+
+    private void UpdateLevelFromScore()
+    {
+        int computedLevel = (Score / Mathf.Max(1, scorePerLevel)) + 1;
+        CurrentLevel = Mathf.Clamp(computedLevel, 1, Mathf.Max(1, maxLevel));
     }
 
     public void SetWave(int wave)

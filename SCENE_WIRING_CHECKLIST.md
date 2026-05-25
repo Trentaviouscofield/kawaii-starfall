@@ -23,7 +23,7 @@ If you want to verify or adjust manually, open `Assets/Scenes/MainScene.unity` a
 - Upgrade orb prefab: add `UpgradeOrb`, Collider2D (trigger), Rigidbody2D (kinematic).
 - Canvas:
   - Start screen panel with Start Game button -> `UIManager.OnStartGamePressed`
-  - HUD TMP texts for Hearts/Score/Wave
+  - HUD TMP texts for Hearts/Score/Wave/Level
   - Game Over panel with Restart button -> `UIManager.OnRestartPressed`
 
 Expected result:

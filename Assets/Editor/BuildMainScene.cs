@@ -84,7 +84,8 @@ public static class BuildMainScene
         var hudRoot = new GameObject("GameplayHUD", typeof(RectTransform));
         hudRoot.transform.SetParent(canvas, false);
         var score = CreateTMP(hudRoot.transform, "ScoreText", "Score: 0", 36, new Vector2(-780, 480));
-        var wave = CreateTMP(hudRoot.transform, "WaveText", "Wave: 1", 36, new Vector2(0, 480));
+        var wave = CreateTMP(hudRoot.transform, "WaveText", "Wave: 1", 36, new Vector2(-180, 480));
+        var level = CreateTMP(hudRoot.transform, "LevelText", "Level: 1", 36, new Vector2(180, 480));
         var hearts = CreateTMP(hudRoot.transform, "HeartsText", "Hearts: 3", 36, new Vector2(780, 480));
         var weapon = CreateTMP(hudRoot.transform, "WeaponText", "Weapon Lv: 1", 30, new Vector2(0, 430));
 
@@ -95,6 +96,7 @@ public static class BuildMainScene
         var so = new SerializedObject(ui);
         so.FindProperty("scoreText").objectReferenceValue = score;
         so.FindProperty("waveText").objectReferenceValue = wave;
+        so.FindProperty("levelText").objectReferenceValue = level;
         so.FindProperty("heartsText").objectReferenceValue = hearts;
         so.FindProperty("weaponText").objectReferenceValue = weapon;
         so.FindProperty("startScreenPanel").objectReferenceValue = startPanel;
